@@ -7,6 +7,7 @@ from xmind2testcase.metadata import TestSuite, TestCase, TestStep
 config = {'sep': ' ',
           'valid_sep': '&>+/-',
           'precondition_sep': '\n----\n',
+		  'type_sep': '\n----\n',
           'summary_sep': '\n----\n',
           'ignore_char': '#!！'
           }
@@ -15,7 +16,8 @@ config = {'sep': ' ',
 def xmind_to_testsuites(xmind_content_dict):
     """convert xmind file to `xmind2testcase.metadata.TestSuite` list"""
     suites = []
-
+	
+    print(xmind_content_dict)
     for sheet in xmind_content_dict:
         logging.debug('start to parse a sheet: %s', sheet['title'])
         root_topic = sheet['topic']
@@ -30,7 +32,6 @@ def xmind_to_testsuites(xmind_content_dict):
         # suite.sheet_name = sheet['title']  # root testsuite has a sheet_name attribute
         logging.debug('sheet(%s) parsing complete: %s', sheet['title'], suite.to_dict())
         suites.append(suite)
-
     return suites
 
 
@@ -133,9 +134,14 @@ def parse_a_testcase(case_dict, parent):
 
     preconditions = gen_testcase_preconditions(topics)
     testcase.preconditions = preconditions if preconditions else '无'
+    
+    #用例类型-胡义东 2019-5-16 09:27:23
+    execution_type = gen_testcase_type(topics)
+    testcase.execution_type = execution_type if execution_type else '无'
 
+    #测试阶段-胡义东 2019-5-16 09:27:17
     summary = gen_testcase_summary(topics)
-    testcase.summary = summary if summary else testcase.name
+    testcase.summary = summary if summary else "无"
 
     testcase.importance = get_priority(case_dict) or 2
 
@@ -186,6 +192,12 @@ def gen_testcase_preconditions(topics):
     notes = [topic['note'] for topic in topics]
     notes = filter_empty_or_ignore_element(notes)
     return config['precondition_sep'].join(notes)
+
+#用例类型-胡义东
+def gen_testcase_type(topics):
+    labels = [topic['label'] for topic in topics]
+    labels = filter_empty_or_ignore_element(labels)
+    return config['type_sep'].join(labels)
 
 
 def gen_testcase_summary(topics):

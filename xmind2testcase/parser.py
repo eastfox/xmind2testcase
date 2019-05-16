@@ -7,7 +7,7 @@ from xmind2testcase.metadata import TestSuite, TestCase, TestStep
 config = {'sep': ' ',
           'valid_sep': '&>+/-',
           'precondition_sep': '\n----\n',
-		  'type_sep': '\n----\n',
+          'type_sep': '\n----\n',
           'summary_sep': '\n----\n',
           'ignore_char': '#!！'
           }
@@ -16,8 +16,6 @@ config = {'sep': ' ',
 def xmind_to_testsuites(xmind_content_dict):
     """convert xmind file to `xmind2testcase.metadata.TestSuite` list"""
     suites = []
-	
-    print(xmind_content_dict)
     for sheet in xmind_content_dict:
         logging.debug('start to parse a sheet: %s', sheet['title'])
         root_topic = sheet['topic']
@@ -135,11 +133,11 @@ def parse_a_testcase(case_dict, parent):
     preconditions = gen_testcase_preconditions(topics)
     testcase.preconditions = preconditions if preconditions else '无'
     
-    #用例类型-胡义东 2019-5-16 09:27:23
+    # 用例类型-东方义狐 2019-5-16 09:27:23
     execution_type = gen_testcase_type(topics)
     testcase.execution_type = execution_type if execution_type else '无'
 
-    #测试阶段-胡义东 2019-5-16 09:27:17
+    # 测试阶段-东方义狐 2019-5-16 09:27:17
     summary = gen_testcase_summary(topics)
     testcase.summary = summary if summary else "无"
 
@@ -193,7 +191,8 @@ def gen_testcase_preconditions(topics):
     notes = filter_empty_or_ignore_element(notes)
     return config['precondition_sep'].join(notes)
 
-#用例类型-胡义东
+
+# 用例类型-东方义狐
 def gen_testcase_type(topics):
     labels = [topic['label'] for topic in topics]
     labels = filter_empty_or_ignore_element(labels)

@@ -45,7 +45,7 @@ def gen_a_testcase_row(testcase_dict):
     case_keyword = '功能测试'
     case_priority = gen_case_priority(testcase_dict['importance'])
     case_type = gen_case_type(testcase_dict['execution_type'])
-    #case_apply_phase = '迭代测试'
+    # case_apply_phase = '迭代测试'
     case_apply_phase = gen_case_apply_phase(testcase_dict['summary'])
     row = [case_module, case_title, case_precontion, case_step, case_expected_result, case_keyword, case_priority, case_type, case_apply_phase]
     return row
@@ -80,8 +80,9 @@ def gen_case_priority(priority):
     else:
         return '中'
 
-#用例类型-胡义东
-#def gen_case_type(case_type):
+
+# 用例类型-东方义狐
+# def gen_case_type(case_type):
 #    mapping = {1: '功能测试', 2: '性能测试', 3: '配置相关', 4: '安装部署', 5: '安全相关', 6: '接口测试', 7: '其他'}
 #    if case_type in mapping.keys():
 #        return mapping[case_type]
@@ -91,13 +92,14 @@ def gen_case_type(case_type):
     if case_type=='无':
         return '功能测试'
     else:
-	    return case_type
+        return case_type
+
 
 def gen_case_apply_phase(case_apply_phase):
     if case_apply_phase=='无':
         return '功能测试阶段'
     else:
-	    return case_apply_phase
+        return case_apply_phase
 
 
 if __name__ == '__main__':
